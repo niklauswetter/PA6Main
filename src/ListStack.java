@@ -2,37 +2,43 @@ public class ListStack implements StackInterface
 {
     //Data
     private SinglyLinkedList linkedList = new SinglyLinkedList();
-    private int size = 0;
 
     public ListStack(){}
 
     public ListStack(ListStack listStack)
     {
-        SinglyLinkedList.Node lsPointer = listStack.linkedList.head;
-        for(int i=0;i< listStack.size;i++)
+        if(!listStack.isEmpty())
         {
-            this.push(lsPointer.data);
-            lsPointer = lsPointer.next;
-            this.size++;
+            SinglyLinkedList.Node tNode = listStack.linkedList.head;
+            this.push(tNode.data);
+            while(tNode.next!=null)
+            {
+                tNode=tNode.next;
+                this.push(tNode.data);
+            }
         }
     }
 
     public boolean equals(ListStack listStack)
     {
         boolean flag = true;
-        if(this.size!=listStack.size)
-            flag = false;
+        if(this.size()!=listStack.size())
+            flag=false;
         else
         {
-            int counter =0;
-            SinglyLinkedList.Node ls1Pointer = this.linkedList.head;
-            SinglyLinkedList.Node ls2Pointer = this.linkedList.head;
-            while(flag && counter<this.size)
+            if(this.isEmpty())
+                return flag;
+            SinglyLinkedList.Node nP1 = this.linkedList.head;
+            SinglyLinkedList.Node nP2 = listStack.linkedList.head;
+            while(nP1.next!=null)
             {
-                if(ls1Pointer.data!= ls2Pointer.data)
-                    flag=false;
-                ls1Pointer=ls1Pointer.next;
-                ls2Pointer=ls2Pointer.next;
+                if(nP1.data!= nP2.data)
+                    return false;
+                nP1=nP1.next;
+                nP2=nP2.next;
+                //Check for the last one
+                if(nP1.next==null)
+                    flag = nP1.data == nP2.data;
             }
         }
         return flag;
@@ -47,54 +53,63 @@ public class ListStack implements StackInterface
     @Override
     public void push(int value)
     {
-        this.size++;
         this.linkedList.append(value);
     }
 
     @Override
     public int pop()
     {
-        if(this.size>0)
+        int temp = -1;
+        if(!this.isEmpty())
         {
-            SinglyLinkedList.Node nPointer = this.linkedList.head;
-            this.size--;
-            for(int i =1;i<this.size();i++)
+            SinglyLinkedList.Node tNode = this.linkedList.head;
+            temp = tNode.data;
+            while(tNode.next!=null)
             {
-                System.out.println(nPointer.data);
-                nPointer = nPointer.next;
+                temp=tNode.next.data;
+                tNode=tNode.next;
+                if(tNode.next.next==null)
+                    tNode.next=null;
             }
-            int temp = nPointer.next.data;
-            nPointer.next =null;
-            return temp;
         }
-        else
-            return 0;
+        return temp;
     }
 
     @Override
     public int peek()
     {
-        if(this.size>0)
+        int temp = -1;
+        if(!this.isEmpty())
         {
-            SinglyLinkedList.Node nPointer = this.linkedList.head;
-            for(int i =1;i<this.size();i++)
+            SinglyLinkedList.Node tNode = this.linkedList.head;
+            temp = tNode.data;
+            while(tNode.next!=null)
             {
-                nPointer = nPointer.next;
+                temp=tNode.next.data;
+                tNode=tNode.next;
             }
-            return nPointer.data;
         }
-        else
-            return 0;
+        return temp;
     }
 
     @Override
     public boolean isEmpty() {
-        return this.size==0;
+        return this.linkedList.head == null;
     }
 
     @Override
     public int size() {
-        return this.size;
+        int counter = 0;
+        if(!this.isEmpty())
+        {
+            counter++;
+            SinglyLinkedList.Node tNode = this.linkedList.head;
+            while(tNode.next!=null) {
+                counter++;
+                tNode=tNode.next;
+            }
+        }
+        return counter;
     }
 
     @Override

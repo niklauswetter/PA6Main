@@ -2,20 +2,22 @@ public class Main {
 
     public static void main(String[] args)
     {
-        ListStack listStack = new ListStack();
-        System.out.println(listStack);
-        for(int i = 0;i<25;i++)
-            listStack.push(i);
-        ListStack listStack2 = new ListStack(listStack);
-        System.out.println(listStack.equals(listStack2));
-        System.out.println(listStack.size());
-        System.out.println(listStack.pop());
-        System.out.println(listStack);
-        for(int i =0;i<10;i++)
-            listStack2.pop();
-        System.out.println(listStack2);
-        System.out.println(listStack.equals(listStack2));
-        listStack.clear();
-        System.out.println(listStack);
+        ListQueue listQueue1 = new ListQueue();
+
+        for(int i = 0; i<8;i++)
+        {
+            listQueue1.enqueue(i);
+        }
+
+        System.out.println(listQueue1);
+        ListQueue listQueue2 = new ListQueue(listQueue1);
+        System.out.println(listQueue1.equals(listQueue2));
+        listQueue1.dequeue();
+        System.out.println(listQueue1);
+        System.out.println(listQueue2);
+        System.out.println(listQueue1.peek());
+        for (int i = 0;i<9;i++)
+            System.out.println(listQueue2.dequeue());
+        System.out.println(listQueue2.peek());
     }
 }

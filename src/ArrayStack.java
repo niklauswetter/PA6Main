@@ -78,9 +78,10 @@ public class ArrayStack implements StackInterface
     @Override
     public int pop()
     {
-        int temp = this.dynamicArray[this.size];
+        int temp = -1;
         if(this.size>0)
         {
+            temp = this.dynamicArray[this.size];
             this.size--;
             this.dynamicArray[this.size] = 0;
         }
@@ -90,7 +91,7 @@ public class ArrayStack implements StackInterface
     @Override
     public int peek()
     {
-        int temp = 0;
+        int temp = -1;
         if(this.size>0)
             temp = this.dynamicArray[this.size-1];
         return temp;
